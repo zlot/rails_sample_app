@@ -11,11 +11,16 @@ describe "StaticPages" do
       expect(page).to have_content('Sample App') # simply look for the string 'Sample App'
     end
     
-    it "should have the right title" do
+    it "should have the base title" do
       visit '/static_pages/home'
-      expect(page).to have_title("#{base_title} | Home") #checks for an HTML title with the given content.
-      # note that a substring would work as well: have_title("Home")
+      expect(page).to have_title("Ruby on Rails Tutorial Sample App")
     end
+    
+    it "should NOT have a custom page title" do
+      visit '/static_pages/home'
+      expect(page).not_to have_title("| Home")
+    end
+    
     
   end
   
