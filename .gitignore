@@ -17,3 +17,4 @@
 
 # ignore the .secret file
 .secret
+database.yml
