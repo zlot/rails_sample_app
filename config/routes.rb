@@ -1,10 +1,21 @@
 SampleApp::Application.routes.draw do
-  get "static_pages/home"   #arrange for the route to respond to a GET request
-  get "static_pages/help"
-  get "static_pages/about"
   
-  
-  
+  get "users/new"
+  # Arrange both for a valid page at /help (responding to GET requests) and a 
+  # named route called help_path that returns the path to that page.
+  # NOTE, that the # means run the ACTION as stated in the controller.
+  root 'static_pages#home'
+  match '/signup',    to: 'users#new',                 via: 'get'
+  match '/help',       to: 'static_pages#help',      via: 'get'
+  match '/about',     to: 'static_pages#about',    via: 'get'
+  match '/contact',   to: 'static_pages#contact', via: 'get'
+  #  The code match ’/about’ also automatically creates named routes for use 
+  #  in the controllers and views:
+  #  about_path -> '/about'
+  #  about_url    -> 'http://localhost:3000/about'
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
