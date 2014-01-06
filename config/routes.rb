@@ -1,17 +1,19 @@
 SampleApp::Application.routes.draw do
   
-  get "users/new"
+  # enable REST resource for users.
+  resources :users 
+  
   # Arrange both for a valid page at /help (responding to GET requests) and a 
   # named route called help_path that returns the path to that page.
   # NOTE, that the # means run the ACTION as stated in the controller.
   root 'static_pages#home'
-  match '/signup',    to: 'users#new',                 via: 'get'
-  match '/help',       to: 'static_pages#help',      via: 'get'
-  match '/about',     to: 'static_pages#about',    via: 'get'
+  match '/signup',    to: 'users#new',            via: 'get'
+  match '/help',      to: 'static_pages#help',   via: 'get'
+  match '/about',     to: 'static_pages#about',   via: 'get'
   match '/contact',   to: 'static_pages#contact', via: 'get'
   #  The code match ’/about’ also automatically creates named routes for use 
   #  in the controllers and views:
-  #  about_path -> '/about'
+  #  about_path   -> '/about'
   #  about_url    -> 'http://localhost:3000/about'
 
 
