@@ -19,6 +19,7 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
+  it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
   
   it { should be_valid } # sanity check that @user is initially valid
@@ -136,7 +137,14 @@ describe User do
     it { should be_invalid }
   end
 
-
+  describe "remember token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank } # applies test to a given 
+                                                 # attribute rather than the
+                                                 # subject of the test.
+                                                 # equiv to: it { expect(@user.remember_token).not_to be_blank }
+                                                 
+  end
 
 
 end

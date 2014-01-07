@@ -6,6 +6,11 @@ class User < ActiveRecord::Base
   # alternate way of writing before_save:
   before_save { email.downcase! }    
   
+  # create a remember_token for sessions.
+  before_create :create_remember_token  # this is a method reference. Rails will
+                                        # look for a method called create_remember_token.
+  
+  
   validates :name, presence: true, length: { maximum: 50 }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
@@ -15,8 +20,6 @@ class User < ActiveRecord::Base
               format:     { with: VALID_EMAIL_REGEX }, 
               uniqueness: { case_sensitive: false })  # :uniqueness accepts 
                                                       #    option :case_sensitive
-             
-  
   # These are ALL equivalent!:
   # validates :email, presence: true
   # validates(:email, presence: true)
@@ -32,4 +35,24 @@ class User < ActiveRecord::Base
   # is a password_digest column in the database.
   
   validates :password, length: { minimum: 6 }
+  
+  
+  ## SESSION METHODS ##
+  
+  def User.new_remember_token      # notice the syntax to make this a class method.
+    SecureRandom.urlsafe_base64
+  end
+  
+  def User.encrypt(token)          # also a class method.
+    Digest::SHA1.hexdigest(token.to_s)
+  end
+  
+  
+  private
+  
+    def create_remember_token
+      self.remember_token = User.encrypt(User.new_remember_token)
+    end
+  
+  
 end

@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title><%= full_title( yield :title ) %></title>
-  
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
+	<head>
+		<title><%= full_title( yield :title ) %></title>
 
-  <%= render 'layouts/shim' %>
+		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+		<%= csrf_meta_tags %>
 
-  </head>
-  <body>
+		<%= render 'layouts/shim' %>
 
-    <%= render 'layouts/header' %>
+	</head>
+	<body>
 
-    <div class="container">
-    	
-      <!-- display content of flash. For example, if flash[:success] = Welcome
-      		to the Sample App!, then it will produce:
-      		<div class="alert alert-success">Welcome to the Sample App!</div>-->
-  	  <% flash.each do |key, value| %>
-  	    <div class="alert alert-<%= key %>"><%= value %></div>
-      <%end %>
-      
-      <%= yield %>
-      <%= render 'layouts/footer' %>
-      <%= debug(params) if Rails.env.development? %>
-    </div>
-    
-  </body>
+		<%= render 'layouts/header' %>
+
+		<div class="container">
+
+			<!-- display content of flash. For example, if flash[:success] = Welcome
+			to the Sample App!, then it will produce:
+			<div class="alert alert-success">Welcome to the Sample App!</div>-->
+			<% flash.each do |key, value| %>
+				<%= content_tag(:div, value, class: "alert alert-#{key}") %>
+			<%end %>
+
+			<%= yield %>
+			<%= render 'layouts/footer' %>
+			<%= debug(params) if Rails.env.development? %>
+		</div>
+
+	</body>
 </html>
