@@ -13,8 +13,9 @@ class UsersController < ApplicationController
   end
   
   # REST-supported action, tied to resources :users in routes.rb.
+  # default route: /users/{id} HTTPrequest: POST
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params) # call user_params(), see private method
     if @user.save
       sign_in @user       # sign the user in
       flash[:success] = "Welcome to the Sample App!" # flash is defined in 
@@ -22,6 +23,24 @@ class UsersController < ApplicationController
       redirect_to @user   # redirect
     else
       render 'new'        # render the new action.
+    end
+  end
+  
+  # REST-supported action, tied to resources :users in routes.rb
+  # default route: /users/{id}/edit HTTPrequest: GET
+  def edit
+    @user = User.find(params[:id])
+  end
+  
+  # REST-supported action, tied to resources :users in routes.rb.
+  # default route: /users/{id} HTTPrequest: PATCH
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params())
+      flash[:success] = "Profile updated"
+      redirect_to @user
+    else
+      render 'edit'
     end
   end
   
