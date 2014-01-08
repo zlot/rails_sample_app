@@ -1,0 +1,16 @@
+<li>
+	<% 
+		# gravatar_for is defined in users_helper.rb
+	%>
+ 	<%= gravatar_for user, size: 52 %>  
+ 	<%= link_to user.name, user %>
+ 	
+ 	<% 
+ 	   # show link only if current_user is admin and the user being listed by
+ 	   #  render(@users) in index.html.erb is NOT the current_user.
+ 	%>
+ 	<% if current_user.admin? && !current_user?(user) %>
+ 	   | <%= link_to "delete", user, method: :delete, data: { confirm: "You sure?" } %>
+ 	<% end %>	
+ 	
+</li>

@@ -1,0 +1,21 @@
+<% provide(:title, 'All users') %>
+<h1>All users</h1>
+
+
+<%= will_paginate %>
+<% 
+   #The will_paginate method is a little magical; inside a users view, 
+   # it automatically looks for an @users object, and then displays pagination 
+   # links to access other pages. See Listing 9.33 http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#top 
+%>
+
+<ul class="users">
+  <%= render @users %>
+  <!-- Equiavlent to above: (see Listing 9.37 http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#top) 
+  <% @users.each do |user| %>
+	<%= render user %> <!-- looks for partial called _user.html.erb
+  <% end %>
+  -->
+</ul>
+
+<%= will_paginate %>
