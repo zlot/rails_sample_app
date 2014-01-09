@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
   
+  has_many :microposts    # connecting the HAS MANY relationship to microposts.
+  
   # before_save { self.email = email.downcase } # a callback method.
-                                               # where does self.email come from?
-                                               # see migrate file create_users. 
+                                                # where does self.email come from?
+                                                # see migrate file create_users. 
   # alternate way of writing before_save:
   before_save { email.downcase! }    
   
