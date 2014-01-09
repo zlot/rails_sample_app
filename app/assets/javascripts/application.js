@@ -15,3 +15,24 @@
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
+
+
+/*
+function showWordCount() {
+	// get contents of id micropost_content
+	// value?
+	var micropost = $('#micropost_content').val();
+	// print out 140 - length.
+	alert(140 - micropost.length);
+}
+
+//showWordCount();
+
+// add event handler to #micropost_content
+// so that every time a keydown happens, run showWordCount()
+
+$("body").on("click", function() {
+	showWordCount();
+});
+
+*/
