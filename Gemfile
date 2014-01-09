@@ -6,6 +6,9 @@ ruby '2.0.0'
 gem 'rails', '4.0.2'
 gem 'bootstrap-sass', '2.3.2.0'
 gem 'bcrypt-ruby', '3.1.2'      # for password_digest encryption
+gem 'faker', '1.1.2'            # for generating users for tests.
+gem 'will_paginate', '3.0.4'
+gem 'bootstrap-will_paginate', '0.0.9'
 
 gem 'sass-rails', '4.0.1'
 gem 'uglifier', '2.1.1'

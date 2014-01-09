@@ -11,6 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< Updated upstream
 ActiveRecord::Schema.define(version: 20140108234635) do
 
   create_table "microposts", force: true do |t|
@@ -19,6 +20,9 @@ ActiveRecord::Schema.define(version: 20140108234635) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+=======
+ActiveRecord::Schema.define(version: 20140107115359) do
+>>>>>>> Stashed changes
 
   create_table "users", force: true do |t|
     t.string   "name"

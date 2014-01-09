@@ -39,11 +39,27 @@ module SessionsHelper
       #   but on subsequent invocations returns @current_user without hitting the db.
   end
   
+  def current_user?(user)
+    user == current_user
+  end
+  
   
   def sign_out
     current_user.update_attribute(:remember_token, User.encrypt(User.new_remember_token))
     cookies.delete(:remember_token)
     self.current_user = nil
+  end
+  
+  
+  # helpers to implement friendly forwarding.
+  # see Listing 9.17 http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#top
+  def redirect_back_or(default)
+    redirect_to(session[:return_to] || default)
+    session.delete(:return_to)
+  end
+  
+  def store_location
+    session[:return_to] = request.url if request.get?
   end
   
 end
