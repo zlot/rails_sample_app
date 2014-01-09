@@ -2,8 +2,10 @@ SampleApp::Application.routes.draw do
   
   # enable REST resource for users.
   resources :users 
-  # enable REST resource for sessions
-  resources :sessions, only: [:new, :create, :destroy]
+  # enable REST resource for sessions.
+  resources :sessions,    only: [:new, :create, :destroy]
+  # enable REST resource for microposts.
+  resources :microposts,  only: [:create, :destroy]
   
   # Arrange both for a valid page at /help (responding to GET requests) and a 
   # named route called help_path that returns the path to that page.

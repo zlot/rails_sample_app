@@ -20,6 +20,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id]) # gives @user instance var access to the 
                                    # show.html.erb view.
                                    # params retrieves the user id eg /users/1
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
   
   def new
@@ -75,14 +76,6 @@ class UsersController < ApplicationController
   
   
   ### Before filters
-  
-    # This is a method invoked in the before filter. See the top of this class!
-    def signed_in_user
-      unless signed_in?
-        store_location # helper method
-        redirect_to signin_url, notice: "Please sign in."
-      end
-    end
   
     def correct_user
       @user = User.find(params[:id])

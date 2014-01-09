@@ -44,6 +44,16 @@ module SessionsHelper
   end
   
   
+  # This is a method invoked in the before_action in Microposts Controller.
+  # see Listing 10.25 http://ruby.railstutorial.org/chapters/user-microposts#top
+  def signed_in_user
+    unless signed_in?
+      store_location # helper method
+      redirect_to signin_url, notice: "Please sign in."
+    end
+  end
+  
+  
   def sign_out
     current_user.update_attribute(:remember_token, User.encrypt(User.new_remember_token))
     cookies.delete(:remember_token)

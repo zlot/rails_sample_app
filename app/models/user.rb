@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   
-  has_many :microposts    # connecting the HAS MANY relationship to microposts.
+  # connecting the HAS MANY relationship to microposts.
+  has_many :microposts, dependent: :destroy # arrage for dependent microposts
+                                            # to be destroyed when the user is.
+  
   
   # before_save { self.email = email.downcase } # a callback method.
                                                 # where does self.email come from?
@@ -37,6 +40,13 @@ class User < ActiveRecord::Base
   # is a password_digest column in the database.
   
   validates :password, length: { minimum: 6 }
+  
+  
+  def feed
+    # This is prelim atm.
+    Micropost.where("user_id = ?", id) # ? means that id is properly escaped
+                                       # to avoid SQL injection.
+  end
   
   
   ## SESSION METHODS ##
