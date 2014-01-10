@@ -1,0 +1,9 @@
+
+<% # magically use Ajax via remote: true. See Listing 11.35 http://ruby.railstutorial.org/chapters/following-users#sec-the_relationship_model
+%>
+<%= form_for(current_user.relationships.build(followed_id: @user.id), remote: true) do |f| %>
+  <div>
+  	<%= f.hidden_field :followed_id %>
+  </div>
+  <%= f.submit "Follow", class: "btn btn-large btn-primary" %>
+<% end %>

@@ -4,8 +4,9 @@
 
 showWordCount = ->
   micropost = $('#micropost_content').val()
-  alert "140 - #{micropost.length}"
+  $('div.stats').text "Remaining characters: #{140 - micropost.length}"
 
-$("body").on "click", () => 
-  showWordCount();
-
+$(document).ready ->
+  
+  $("textarea#micropost_content").on "keydown", () => 
+    showWordCount();

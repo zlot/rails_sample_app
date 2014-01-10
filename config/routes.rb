@@ -1,11 +1,22 @@
 SampleApp::Application.routes.draw do
   
   # enable REST resource for users.
-  resources :users 
+  resources :users do
+    # The member method will make the routes respond to URLs containing the user id.
+    # The other possiblity is collection(), which works without the id
+    #  see Listing 11.18 http://ruby.railstutorial.org/chapters/following-users#sec-the_relationship_model
+    member do                     
+      get :following, :followers  # url will look: /users/1/following, and /users/1/followers
+    end
+    
+  end
   # enable REST resource for sessions.
-  resources :sessions,    only: [:new, :create, :destroy]
+  resources :sessions,      only: [:new, :create, :destroy]
   # enable REST resource for microposts.
-  resources :microposts,  only: [:create, :destroy]
+  resources :microposts,    only: [:create, :destroy]
+  
+  resources :relationships, only: [:create, :destroy] 
+  
   
   # Arrange both for a valid page at /help (responding to GET requests) and a 
   # named route called help_path that returns the path to that page.

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   #   method and invoke it here. See Listing 9.12
   #   http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#top
   #   using the :only options hash, we say this applies only to the edit() and update() methods.
-  before_action :signed_in_user, only: [:index, :edit, :update, :destroy]
+  before_action :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
   
@@ -64,6 +64,25 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
+  
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])    # params[] retreives params from route eg /users/1
+    @users = @user.followed_users.paginate(page: params[:page])
+    render 'show_follow'
+  end
+  
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
+  end
+  
+  
+  
+  
+  
   private
   
     # safe way of taking a POST request from a user and filtering their submitted
@@ -75,7 +94,7 @@ class UsersController < ApplicationController
     end
   
   
-  ### Before filters
+    ### Before filters
   
     def correct_user
       @user = User.find(params[:id])

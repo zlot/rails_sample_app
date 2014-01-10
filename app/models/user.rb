@@ -3,6 +3,24 @@ class User < ActiveRecord::Base
   # connecting the HAS MANY relationship to microposts.
   has_many :microposts, dependent: :destroy # arrage for dependent microposts
                                             # to be destroyed when the user is.
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+  
+  # we are using the nicer followed_users instead of user.followeds, which is the array
+  # which Rails will auto-create. We use :source to define that the source of :followed_users
+  # is actually :followed. See Listing 11.10, http://ruby.railstutorial.org/chapters/following-users#sec-the_relationship_model
+  has_many :followed_users, through: :relationships, source: :followed
+  
+  
+  ### Note the symmetry between these two has_many relationship couples!!
+
+  # see Listing 11.16 http://ruby.railstutorial.org/chapters/following-users#sec-the_relationship_model  
+  has_many :reverse_relationships, foreign_key: "followed_id",
+                                   class_name: "Relationship",
+                                   dependent: :destroy
+  has_many :followers, through: :reverse_relationships, source: :follower
+  
+  
+  
   
   
   # before_save { self.email = email.downcase } # a callback method.
@@ -43,10 +61,22 @@ class User < ActiveRecord::Base
   
   
   def feed
-    # This is prelim atm.
-    Micropost.where("user_id = ?", id) # ? means that id is properly escaped
-                                       # to avoid SQL injection.
+    Micropost.from_users_followed_by(self)
   end
+  
+  
+  def following?(other_user)
+    self.relationships.find_by(followed_id: other_user.id)
+  end
+  
+  def follow!(other_user)
+    self.relationships.create!(followed_id: other_user.id)
+  end
+  
+  def unfollow!(other_user)
+    self.relationships.find_by(followed_id: other_user.id).destroy!
+  end
+  
   
   
   ## SESSION METHODS ##
