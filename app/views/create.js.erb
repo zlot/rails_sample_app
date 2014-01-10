@@ -1,0 +1,6 @@
+# where does this file get used?
+# for the destroy action in the Relationships controller: to deal with the ajax response.
+# see the destroy action for more info.
+
+$("#follow_form").html("<%= escape_javascript(render('users/follow')) %>")
+$("#followers").html('<%= #{@user.followers.count} followers %>')
